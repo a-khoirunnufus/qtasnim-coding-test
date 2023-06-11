@@ -30,4 +30,8 @@ Route::middleware(['auth.basic'])->group(function () {
     Route::get('/product-category/{category_id}', 'App\Http\Controllers\Api\ProductCategoryController@show');
     Route::put('/product-category/{category_id}', 'App\Http\Controllers\Api\ProductCategoryController@update');
     Route::delete('/product-category/{category_id}', 'App\Http\Controllers\Api\ProductCategoryController@destroy');
+
+    Route::get('/transaction', 'App\Http\Controllers\Api\TransactionController@index');
+    Route::post('/transaction', 'App\Http\Controllers\Api\TransactionController@store');
+    Route::get('/transaction/{category_id}', 'App\Http\Controllers\Api\TransactionController@show');
 });

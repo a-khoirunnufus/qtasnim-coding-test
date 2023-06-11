@@ -41,8 +41,8 @@ class ProductController extends Controller
 
         if (isset($validated['sort_by'])) {
             $sort_by_process = 'p.'.$validated['sort_by'];
-            if($sort_by_process == 'category_name') {
-                $sort_by_process == 'c.category_name';
+            if($validated['sort_by'] == 'category_name') {
+                $sort_by_process = 'c.category_name';
             }
             $query = $query->orderBy($sort_by_process, $validated['order_by']);
         }

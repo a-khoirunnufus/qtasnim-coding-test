@@ -1033,18 +1033,10 @@
                     "type": "object",
                     "properties": {
                       "id": { "type": "integer" },
-                      "product_id": { "type": "integer" },
                       "product_name": { "type": "string" },
-                      "category_id": { "type": "string" },
                       "category_name": { "type": "string" },
                       "quantity": { "type": "integer" },
-                      "transaction_date": { "type": "string" },
-                      "created_at": { "type": "string" },
-                      "updated_at": { "type": "string" },
-                      "deleted_at": {
-                        "type": "string",
-                        "nullable": true
-                      }
+                      "transaction_date": { "type": "string" }
                     }
                   }
                 },
@@ -1053,39 +1045,24 @@
                     "value": [
                       {
                         "id": 1,
-                        "product_id": 1,
                         "product_name": "Kopi",
-                        "category_id": 1,
                         "category_name": "Konsumsi",
                         "quantity": 10,
-                        "transaction_date": "2021-05-01",
-                        "created_at": "2023-06-11 12:00:00",
-                        "updated_at": "2023-06-11 12:00:00",
-                        "deleted_at": null
+                        "transaction_date": "2021-05-01"
                       },
                       {
                         "id": 2,
-                        "product_id": 2,
                         "product_name": "Teh",
-                        "category_id": 1,
                         "category_name": "Konsumsi",
                         "quantity": 19,
-                        "transaction_date": "2021-05-05",
-                        "created_at": "2023-06-11 12:00:00",
-                        "updated_at": "2023-06-11 12:00:00",
-                        "deleted_at": null
+                        "transaction_date": "2021-05-05"
                       },
                       {
                         "id": 3,
-                        "product_id": 1,
                         "product_name": "Kopi",
-                        "category_id": 1,
                         "category_name": "Konsumsi",
                         "quantity": 15,
-                        "transaction_date": "2021-05-10",
-                        "created_at": "2023-06-11 12:00:00",
-                        "updated_at": "2023-06-11 12:00:00",
-                        "deleted_at": null
+                        "transaction_date": "2021-05-10"
                       }
                     ]
                   }
@@ -1138,33 +1115,20 @@
                   "type": "object",
                   "properties": {
                     "id": { "type": "integer" },
-                    "product_id": { "type": "integer" },
                     "product_name": { "type": "string" },
-                    "category_id": { "type": "string" },
                     "category_name": { "type": "string" },
                     "quantity": { "type": "integer" },
-                    "transaction_date": { "type": "string" },
-                    "created_at": { "type": "string" },
-                    "updated_at": { "type": "string" },
-                    "deleted_at": {
-                      "type": "string",
-                      "nullable": true
-                    }
+                    "transaction_date": { "type": "string" }
                   }
                 },
                 "examples": {
                   "default": {
                     "value": {
                       "id": 1,
-                      "product_id": 1,
                       "product_name": "Kopi",
-                      "category_id": 1,
                       "category_name": "Konsumsi",
                       "quantity": 10,
-                      "transaction_date": "2021-05-01",
-                      "created_at": "2023-06-11 12:00:00",
-                      "updated_at": "2023-06-11 12:00:00",
-                      "deleted_at": null
+                      "transaction_date": "2021-05-01"
                     }
                   }
                 }
@@ -1239,33 +1203,20 @@
                   "type": "object",
                   "properties": {
                     "id": { "type": "integer" },
-                    "product_id": { "type": "integer" },
                     "product_name": { "type": "string" },
-                    "category_id": { "type": "string" },
                     "category_name": { "type": "string" },
                     "quantity": { "type": "integer" },
-                    "transaction_date": { "type": "string" },
-                    "created_at": { "type": "string" },
-                    "updated_at": { "type": "string" },
-                    "deleted_at": {
-                      "type": "string",
-                      "nullable": true
-                    }
+                    "transaction_date": { "type": "string" }
                   }
                 },
                 "examples": {
                   "default": {
                     "value": {
                       "id": 1,
-                      "product_id": 1,
                       "product_name": "Kopi",
-                      "category_id": 1,
                       "category_name": "Konsumsi",
                       "quantity": 10,
-                      "transaction_date": "2021-05-01",
-                      "created_at": "2023-06-11 12:00:00",
-                      "updated_at": "2023-06-11 12:00:00",
-                      "deleted_at": null
+                      "transaction_date": "2021-05-01"
                     }
                   }
                 }
