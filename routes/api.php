@@ -14,12 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('/get-auth-code', function() {
+    return response()->json(['code' => base64_encode('qtasnim-coding-test:qtasnim-coding-test')], 200);
 });
 
-Route::get('/product', 'App\Http\Controllers\Api\ProductController@index');
-Route::post('/product', 'App\Http\Controllers\Api\ProductController@store');
-Route::get('/product/{product_id}', 'App\Http\Controllers\Api\ProductController@show');
-Route::put('/product/{product_id}', 'App\Http\Controllers\Api\ProductController@update');
-Route::delete('/product/{product_id}', 'App\Http\Controllers\Api\ProductController@destroy');
+Route::middleware(['auth.basic'])->group(function () {
+    Route::get('/product', 'App\Http\Controllers\Api\ProductController@index')->middleware('auth.basic');
+    Route::post('/product', 'App\Http\Controllers\Api\ProductController@store');
+    Route::get('/product/{product_id}', 'App\Http\Controllers\Api\ProductController@show');
+    Route::put('/product/{product_id}', 'App\Http\Controllers\Api\ProductController@update');
+    Route::delete('/product/{product_id}', 'App\Http\Controllers\Api\ProductController@destroy');
+});
