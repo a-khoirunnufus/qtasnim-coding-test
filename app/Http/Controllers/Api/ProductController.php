@@ -16,7 +16,7 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'query' => 'nullable',
+            'search' => 'nullable',
             'sort_by' => 'nullable|in:product_name,category_name,quantity,sold,available',
             'order_by' => 'required_with:sort_by|in:asc,desc',
             'offset' => 'nullable|integer',
@@ -34,9 +34,9 @@ class ProductController extends Controller
         $query = DB::table('public.product as p')
             ->leftJoin('public.product_category as c', 'c.id', '=', 'p.category_id');
 
-        if (isset($validated['query'])) {
-            $query = $query->where('p.product_name', 'ilike', "%{$validated['query']}%")
-                ->orWhere('c.category_name', 'ilike', "%{$validated['query']}%");
+        if (isset($validated['search'])) {
+            $query = $query->where('p.product_name', 'ilike', "%{$validated['search']}%")
+                ->orWhere('c.category_name', 'ilike', "%{$validated['search']}%");
         }
 
         if (isset($validated['sort_by'])) {

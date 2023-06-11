@@ -1268,44 +1268,6 @@
             "description": "Rentang tanggal selesai",
             "required": false,
             "schema": { "type": "string" }
-          },
-          {
-            "in": "query",
-            "name": "search",
-            "description": "Keyword pencarian",
-            "required": false,
-            "schema": { "type": "string" }
-          },
-          {
-            "in": "query",
-            "name": "limit",
-            "description": "Limit untuk pagination",
-            "required": false,
-            "schema": { "type": "integer" }
-          },
-          {
-            "in": "query",
-            "name": "offset",
-            "description": "Offset untuk pagination",
-            "required": false,
-            "schema": { "type": "integer" }
-          },
-          {
-            "in": "query",
-            "name": "sort_by",
-            "description": "Urutkan data berdasarkan kolom tertentu",
-            "required": false,
-            "schema": { "type": "string" }
-          },
-          {
-            "in": "query",
-            "name": "order_by",
-            "description": "Urutkan data berdasarkan jenis pengurutan",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "enum": ["asc", "desc"]
-            }
           }
         ],
         "responses": {

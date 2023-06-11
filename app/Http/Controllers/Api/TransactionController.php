@@ -17,7 +17,7 @@ class TransactionController extends Controller
     public function index(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'query' => 'nullable',
+            'search' => 'nullable',
             'sort_by' => 'nullable|in:product_name,category_name,quantity,transaction_date',
             'order_by' => 'required_with:sort_by|in:asc,desc',
             'offset' => 'nullable|integer',
@@ -34,10 +34,10 @@ class TransactionController extends Controller
 
         $query = DB::table('public.transaction');
 
-        if (isset($validated['query'])) {
-            $query = $query->where('product_name', 'ilike', "%{$validated['query']}%")
-                ->orWhere('category_name', 'ilike', "%{$validated['query']}%")
-                ->orWhere('transaction_date', 'ilike', "%{$validated['query']}%");
+        if (isset($validated['search'])) {
+            $query = $query->where('product_name', 'ilike', "%{$validated['search']}%")
+                ->orWhere('category_name', 'ilike', "%{$validated['search']}%")
+                ->orWhere('transaction_date', 'ilike', "%{$validated['search']}%");
         }
 
         if (isset($validated['sort_by'])) {

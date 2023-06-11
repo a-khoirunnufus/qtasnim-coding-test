@@ -34,4 +34,6 @@ Route::middleware(['auth.basic'])->group(function () {
     Route::get('/transaction', 'App\Http\Controllers\Api\TransactionController@index');
     Route::post('/transaction', 'App\Http\Controllers\Api\TransactionController@store');
     Route::get('/transaction/{category_id}', 'App\Http\Controllers\Api\TransactionController@show');
+
+    Route::get('/sales-summary', 'App\Http\Controllers\Api\SalesSummaryController@index');
 });
