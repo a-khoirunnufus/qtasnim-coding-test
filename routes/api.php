@@ -19,9 +19,15 @@ Route::get('/get-auth-code', function() {
 });
 
 Route::middleware(['auth.basic'])->group(function () {
-    Route::get('/product', 'App\Http\Controllers\Api\ProductController@index')->middleware('auth.basic');
+    Route::get('/product', 'App\Http\Controllers\Api\ProductController@index');
     Route::post('/product', 'App\Http\Controllers\Api\ProductController@store');
     Route::get('/product/{product_id}', 'App\Http\Controllers\Api\ProductController@show');
     Route::put('/product/{product_id}', 'App\Http\Controllers\Api\ProductController@update');
     Route::delete('/product/{product_id}', 'App\Http\Controllers\Api\ProductController@destroy');
+
+    Route::get('/product-category', 'App\Http\Controllers\Api\ProductCategoryController@index');
+    Route::post('/product-category', 'App\Http\Controllers\Api\ProductCategoryController@store');
+    Route::get('/product-category/{category_id}', 'App\Http\Controllers\Api\ProductCategoryController@show');
+    Route::put('/product-category/{category_id}', 'App\Http\Controllers\Api\ProductCategoryController@update');
+    Route::delete('/product-category/{category_id}', 'App\Http\Controllers\Api\ProductCategoryController@destroy');
 });

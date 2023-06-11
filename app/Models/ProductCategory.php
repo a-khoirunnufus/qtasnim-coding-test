@@ -10,4 +10,6 @@ class ProductCategory extends Model
     use SoftDeletes;
 
     protected $table = 'public.product_category';
+
+    protected $fillable = ['category_name'];
 }

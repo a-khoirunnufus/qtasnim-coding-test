@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\Product;
+use App\Models\ProductCategory;
 
-class ProductController extends Controller
+class ProductCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +17,7 @@ class ProductController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'query' => 'nullable',
-            'sort_by' => 'nullable|in:product_name,category_name,quantity,sold,available',
+            'sort_by' => 'nullable|in:category_name',
             'order_by' => 'required_with:sort_by|in:asc,desc',
             'offset' => 'nullable|integer',
             'limit' => 'nullable|integer',
@@ -31,20 +31,14 @@ class ProductController extends Controller
 
         $validated = $validator->validated();
 
-        $query = DB::table('public.product as p')
-            ->leftJoin('public.product_category as c', 'c.id', '=', 'p.category_id');
+        $query = DB::table('public.product_category');
 
         if (isset($validated['query'])) {
-            $query = $query->where('p.product_name', 'ilike', "%{$validated['query']}%")
-                ->orWhere('c.category_name', 'ilike', "%{$validated['query']}%");
+            $query = $query->where('category_name', 'ilike', "%{$validated['query']}%");
         }
 
         if (isset($validated['sort_by'])) {
-            $sort_by_process = 'p.'.$validated['sort_by'];
-            if($sort_by_process == 'category_name') {
-                $sort_by_process == 'c.category_name';
-            }
-            $query = $query->orderBy($sort_by_process, $validated['order_by']);
+            $query = $query->orderBy($validated['sort_by'], $validated['order_by']);
         }
 
         if (isset($validated['offset'])) {
@@ -55,21 +49,7 @@ class ProductController extends Controller
             $query = $query->take($validated['limit']);
         }
 
-        $data = $query
-            ->select(
-                'p.id',
-                'p.product_name',
-                'p.category_id',
-                'c.category_name',
-                'p.quantity',
-                'p.sold',
-                'p.available',
-                'p.created_at',
-                'p.updated_at',
-                'p.deleted_at'
-            )
-            ->get()
-            ->toArray();
+        $data = $query->get()->toArray();
 
         return response()->json($data, 200);
     }
@@ -80,9 +60,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'product_name' => 'required',
-            'category_id' => 'required|integer|exists:App\Models\ProductCategory,id',
-            'quantity' => 'required|integer|min:0'
+            'category_name' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -96,12 +74,8 @@ class ProductController extends Controller
         try {
             DB::beginTransaction();
 
-            $product = Product::create([
-                'product_name' => $validated['product_name'],
-                'category_id' => $validated['category_id'],
-                'quantity' => $validated['quantity'],
-                'sold' => 0,
-                'available' => $validated['quantity'],
+            $category = ProductCategory::create([
+                'category_name' => $validated['category_name'],
             ]);
 
             DB::commit();
@@ -115,33 +89,32 @@ class ProductController extends Controller
             ], 500);
         }
 
-        return response()->json($product, 200);
+        return response()->json($category, 200);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $product_id)
+    public function show(string $category_id)
     {
-        $product = Product::find($product_id);
+        $category = ProductCategory::find($category_id);
 
-        if ($product == null) {
+        if ($category == null) {
             return response()->json([
-                'error' => 'Produk dengan id ini tidak tersedia.',
+                'error' => 'Kategori dengan id ini tidak tersedia.',
             ], 404);
         }
 
-        return response()->json($product, 200);
+        return response()->json($category, 200);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $product_id)
+    public function update(Request $request, string $category_id)
     {
         $validator = Validator::make($request->all(), [
-            'product_name' => 'nullable',
-            'category_id' => 'nullable|integer|exists:App\Models\ProductCategory,id',
+            'category_name' => 'nullable',
         ]);
 
         if ($validator->fails()) {
@@ -152,16 +125,16 @@ class ProductController extends Controller
 
         $validated = $validator->validated();
 
-        if (Product::find($product_id) == null) {
+        if (ProductCategory::find($category_id) == null) {
             return response()->json([
-                'error' => 'Produk dengan id ini tidak tersedia.',
+                'error' => 'Kategori dengan id ini tidak tersedia.',
             ], 404);
         }
 
         try {
             DB::beginTransaction();
 
-            Product::where('id', '=', $product_id)->update($validated);
+            ProductCategory::where('id', '=', $category_id)->update($validated);
 
             DB::commit();
         } catch (\Throwable $th) {
@@ -174,26 +147,26 @@ class ProductController extends Controller
             ], 500);
         }
 
-        return response()->json(Product::find($product_id), 200);
+        return response()->json(ProductCategory::find($category_id), 200);
 
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $product_id)
+    public function destroy(string $category_id)
     {
-        $product = Product::find($product_id);
-        if ($product == null) {
+        $category = ProductCategory::find($category_id);
+        if ($category == null) {
             return response()->json([
-                'error' => 'Produk dengan id ini tidak tersedia.',
+                'error' => 'Kategori dengan id ini tidak tersedia.',
             ], 404);
         }
 
         try {
             DB::beginTransaction();
 
-            $product->delete();
+            $category->delete();
 
             DB::commit();
         } catch (\Throwable $th) {
@@ -207,7 +180,7 @@ class ProductController extends Controller
         }
 
         return response()->json([
-            'success' => 'Berhasil menghapus produk.',
+            'success' => 'Berhasil menghapus kategori.',
         ], 200);
     }
 }
