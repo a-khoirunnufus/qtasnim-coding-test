@@ -58,7 +58,7 @@ class TransactionController extends Controller
                 'product_name',
                 'category_name',
                 'quantity',
-                'transaction_date'
+                DB::raw('transaction_date::DATE')
             )
             ->get()
             ->toArray();
@@ -97,7 +97,7 @@ class TransactionController extends Controller
             DB::beginTransaction();
 
             $product->available = $product->available - $validated['quantity'];
-            $product->sold = $product->sale + $validated['quantity'];
+            $product->sold = $product->sold + $validated['quantity'];
             $product->save();
 
             $transaction = Transaction::create([

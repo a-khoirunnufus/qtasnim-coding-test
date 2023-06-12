@@ -49,7 +49,10 @@ class ProductCategoryController extends Controller
             $query = $query->take($validated['limit']);
         }
 
-        $data = $query->get()->toArray();
+        $data = $query
+            ->whereNull('deleted_at')
+            ->get()
+            ->toArray();
 
         return response()->json($data, 200);
     }

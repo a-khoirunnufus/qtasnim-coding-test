@@ -16,6 +16,7 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'available_only' => 'nullable|in:yes,no',
             'search' => 'nullable',
             'sort_by' => 'nullable|in:product_name,category_name,quantity,sold,available',
             'order_by' => 'required_with:sort_by|in:asc,desc',
@@ -33,6 +34,12 @@ class ProductController extends Controller
 
         $query = DB::table('public.product as p')
             ->leftJoin('public.product_category as c', 'c.id', '=', 'p.category_id');
+
+        if (isset($validated['available_only'])) {
+            if($validated['available_only'] == 'yes') {
+                $query = $query->where('p.available', '>', 0);
+            }
+        }
 
         if (isset($validated['search'])) {
             $query = $query->where('p.product_name', 'ilike', "%{$validated['search']}%")
@@ -68,6 +75,7 @@ class ProductController extends Controller
                 'p.updated_at',
                 'p.deleted_at'
             )
+            ->whereNull('p.deleted_at')
             ->get()
             ->toArray();
 
