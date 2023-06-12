@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/product', 'App\Http\Controllers\PageController@product')->name('product');
+Route::get('/product-category', 'App\Http\Controllers\PageController@category')->name('category');
+Route::get('/transaction', 'App\Http\Controllers\PageController@transaction')->name('transaction');
+Route::get('/sales-summary', 'App\Http\Controllers\PageController@summary')->name('summary');
